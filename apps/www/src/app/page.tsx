@@ -10,6 +10,8 @@ import { Raycast } from "@/components/examples/raycast"
 import { Kbd } from "@/components/kbd"
 
 export default function Home() {
+  const [open, setOpen] = React.useState(false)
+
   return (
     <div>
       <Background />
@@ -38,11 +40,18 @@ export default function Home() {
         </nav>
         <div className="mx-auto mt-10 w-full max-w-screen-md space-y-4">
           <p className="text-muted-fg text-center text-sm">
-            <Kbd>⌘</Kbd> + <Kbd>K</Kbd> to open in dialog
+            <Kbd>⌘</Kbd> + <Kbd>K</Kbd> or click{" "}
+            <span
+              className="text-fg cursor-pointer font-medium underline-offset-4 transition-all duration-200 hover:underline"
+              onClick={() => setOpen(true)}
+            >
+              here
+            </span>{" "}
+            to open in dialog
           </p>
           <div className="bg-muted mx-auto h-px w-1/2" />
           <Raycast />
-          <Dialog />
+          <Dialog open={open} setOpen={setOpen} />
         </div>
       </div>
     </div>

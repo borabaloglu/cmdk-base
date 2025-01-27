@@ -115,9 +115,12 @@ const CommandMeta = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export function Dialog() {
-  const [open, setOpen] = React.useState(false)
+interface DialogProps {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
 
+export function Dialog({ open, setOpen }: DialogProps) {
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
