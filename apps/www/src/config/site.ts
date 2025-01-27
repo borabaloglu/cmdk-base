@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "CMDK Base",
+  name: "⌘K - Base",
   url: "https://cmdk-base.vercel.app",
   ogImage: "https://cmdk-base.vercel.app/og.jpg",
   description:

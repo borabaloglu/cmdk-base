@@ -57,7 +57,7 @@ const projects = [
     onSelect: () => window.open("https://vaul-base.vercel.app", "_blank"),
   },
   {
-    name: "CMDK Base",
+    name: "⌘K - Base",
     icon: <CmdkIcon />,
     keywords: ["project"],
     onSelect: () => window.open("https://cmdk-base.vercel.app", "_blank"),
