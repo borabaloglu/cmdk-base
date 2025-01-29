@@ -15,7 +15,7 @@ This is a port of [⌘K](https://github.com/pacocoursey/cmdk) to Base UI. It's o
 To start using ⌘K Base, install it in your project:
 
 ```bash
-npm install cmkd-base
+npm install cmdk-base
 ```
 
 Use the Command in your application:
