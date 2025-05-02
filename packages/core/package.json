@@ -1,6 +1,6 @@
 {
   "name": "cmdk-base",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fast, unstyled command menu React component.",
   "license": "MIT",
   "publishConfig": {
