@@ -1,3 +1,5 @@
+// This is a fork of https://github.com/pacocoursey/cmdk/blob/main/cmdk/src/command-score.ts
+
 // The scores are arranged so that a continuous match of characters will
 // result in a total score of 1.
 //
@@ -58,7 +60,7 @@ function commandScoreInner(
   lowerAbbreviation: string,
   stringIndex: number,
   abbreviationIndex: number,
-  memoizedResults: Record<string, number>,
+  memoizedResults: Record<string, number>
 ) {
   if (abbreviationIndex === abbreviation.length) {
     if (stringIndex === value.length) {
@@ -86,7 +88,7 @@ function commandScoreInner(
       lowerAbbreviation,
       index + 1,
       abbreviationIndex + 1,
-      memoizedResults,
+      memoizedResults
     )
     if (score > highScore) {
       if (index === stringIndex) {
@@ -128,7 +130,7 @@ function commandScoreInner(
         lowerAbbreviation,
         index + 1,
         abbreviationIndex + 2,
-        memoizedResults,
+        memoizedResults
       )
 
       if (transposedScore * SCORE_TRANSPOSITION > score) {
@@ -149,7 +151,7 @@ function commandScoreInner(
 
 function formatInput(value: string) {
   // convert all valid space characters to space so they match each other
-  return value.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
+  return value.toLowerCase().replace(COUNT_SPACE_REGEXP, " ")
 }
 
 export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
@@ -157,6 +159,6 @@ export function commandScore(string: string, abbreviation: string, aliases: stri
    * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    */
-  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+  string = aliases && aliases.length > 0 ? `${string + " " + aliases.join(" ")}` : string
   return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
 }
