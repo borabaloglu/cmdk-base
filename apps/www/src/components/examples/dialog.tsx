@@ -2,13 +2,16 @@ import * as React from "react"
 import {
   CommandDialog,
   CommandEmpty,
-  CommandGroup as CommandGroupBase,
   CommandInput,
-  CommandItem as CommandItemBase,
   CommandList,
   CommandSeparator,
 } from "cmdk-base"
 
+import {
+  CommandGroup,
+  CommandItem,
+  CommandMeta,
+} from "@/components/examples/components"
 import {
   CmdkIcon,
   GithubIcon,
@@ -64,56 +67,11 @@ const projects = [
   },
   {
     name: "9ui",
-    icon: <NineUiIcon />,
+    icon: <NineUiIcon className="p-0.5" />,
     keywords: ["project"],
     onSelect: () => window.open("https://9ui.vercel.app", "_blank"),
   },
 ]
-
-const CommandGroup = ({
-  children,
-  heading,
-}: {
-  children: React.ReactNode
-  heading: string
-}) => {
-  return (
-    <CommandGroupBase
-      className="[&_[cmdk-group-heading]]:text-muted-fg overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold"
-      heading={heading}
-    >
-      {children}
-    </CommandGroupBase>
-  )
-}
-
-const CommandItem = ({
-  children,
-  onSelect,
-  keywords,
-}: {
-  children: React.ReactNode
-  onSelect: () => void
-  keywords?: string[]
-}) => {
-  return (
-    <CommandItemBase
-      className="data-[selected=true]:bg-muted data-[selected=true]:text-fg relative flex h-10 cursor-default select-none items-center gap-4 rounded-md px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-      onSelect={onSelect}
-      keywords={keywords}
-    >
-      {children}
-    </CommandItemBase>
-  )
-}
-
-const CommandMeta = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <span className="text-muted-fg ml-auto text-xs font-medium">
-      {children}
-    </span>
-  )
-}
 
 interface DialogProps {
   open: boolean
@@ -138,24 +96,21 @@ export function Dialog({ open, setOpen }: DialogProps) {
     <CommandDialog
       open={open}
       onOpenChange={setOpen}
-      overlayClassName="fixed inset-0 h-dvh bg-black/70 transition-all duration-200 [&[data-ending-style]]:opacity-0 [&[data-starting-style]]:opacity-0"
-      contentClassName="fixed left-1/2 top-1/2 z-50 grid w-full max-w-[90%] -translate-x-1/2 -translate-y-1/2 duration-200 data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 md:max-w-screen-md text-fg font-sans"
-      className="bg-subtle border-muted bg-pacity/80 overflow-hidden rounded-lg border bg-clip-padding outline-none backdrop-blur-sm"
+      overlayClassName="fixed inset-0 h-dvh bg-black/80 transition-all duration-200 [&[data-ending-style]]:opacity-0 [&[data-starting-style]]:opacity-0"
+      contentClassName="fixed left-1/2 top-1/2 z-50 grid w-full max-w-[90%] -translate-x-1/2 -translate-y-1/2 duration-200 data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 md:max-w-screen-md text-foreground font-sans"
+      className="bg-popover/50 overflow-hidden rounded-lg border outline-none backdrop-blur-sm"
     >
-      <div
-        className="border-muted flex items-center border-b px-3"
-        cmdk-input-wrapper=""
-      >
+      <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
         <CommandInput
           className={
-            "placeholder:text-muted-fg flex h-10 w-full bg-transparent py-3 text-sm outline-none"
+            "placeholder:text-muted-foreground flex h-10 w-full bg-transparent py-3 text-sm outline-none"
           }
           placeholder="Search for links or projects..."
         />
       </div>
-      <CommandList className="max-h-96 overflow-y-auto px-1 py-2">
+      <CommandList className="max-h-96 overflow-y-auto px-1 py-2 outline-none">
         <CommandEmpty className="mx-auto flex items-center justify-center py-8">
-          <span className="text-muted-fg">No results found</span>
+          <span className="text-muted-foreground">No results found</span>
         </CommandEmpty>
         <CommandGroup heading="Links">
           {links.map((item) => (

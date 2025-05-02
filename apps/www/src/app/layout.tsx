@@ -73,10 +73,8 @@ export default function RootLayout({
         <link rel="canonical" href="https://cmdk-base.vercel.app" />
         <meta name="theme-color" content={META_THEME_COLOR} />
       </head>
-      <body
-        className={`${geistSans.variable} ${instrumentSerif.variable} antialiased`}
-      >
-        <main className="Root font-sans">
+      <body className={`${geistSans.variable} ${instrumentSerif.variable}`}>
+        <main className="Root">
           <div className="container mx-auto mb-10">{children}</div>
         </main>
         <Analytics />

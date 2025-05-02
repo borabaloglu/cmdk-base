@@ -1,20 +1,21 @@
-import React from "react"
-import { merge } from "@/lib/utils"
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
-interface KbdProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode
-}
-
-export function Kbd({ children, className, ...props }: KbdProps) {
+const Kbd = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
   return (
-    <kbd
-      className={merge(
-        "border-muted bg-subtle rounded border px-2 py-1 font-mono text-sm",
+    <div
+      ref={ref}
+      className={cn(
+        "flex h-5 w-min min-w-5 items-center justify-center rounded-sm bg-secondary text-center text-xs font-medium tracking-tight text-secondary-foreground shadow-sm border",
         className
       )}
       {...props}
-    >
-      {children}
-    </kbd>
+    />
   )
-}
+})
+Kbd.displayName = "Kbd"
+
+export { Kbd }
