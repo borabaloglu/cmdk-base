@@ -7,7 +7,7 @@
 
 import * as React from "react"
 import { Dialog as BaseDialog } from "@base-ui-components/react"
-import { useId } from "@base-ui-components/react/utils"
+import { useForkRef, useId } from "@base-ui-components/react/utils"
 
 import { commandScore } from "./command-score"
 
@@ -484,17 +484,20 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
   }
 
   function scrollSelectedIntoView() {
-    const item = getSelectedItem()
+    // Wait for popover positioning to complete before scrolling
+    requestAnimationFrame(() => {
+      const item = getSelectedItem()
 
-    if (item) {
-      if (item.parentElement?.firstChild === item) {
-        // First item in Group, ensure heading is in view
-        item.closest(GROUP_SELECTOR)?.querySelector(GROUP_HEADING_SELECTOR)?.scrollIntoView({ block: "nearest" })
+      if (item) {
+        if (item.parentElement?.firstChild === item) {
+          // First item in Group, ensure heading is in view
+          item.closest(GROUP_SELECTOR)?.querySelector(GROUP_HEADING_SELECTOR)?.scrollIntoView({ block: "nearest" })
+        }
+
+        // Ensure the item is always in view
+        item.scrollIntoView({ block: "nearest" })
       }
-
-      // Ensure the item is always in view
-      item.scrollIntoView({ block: "nearest" })
-    }
+    })
   }
 
   /** Getters */
@@ -719,7 +722,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
 
   return (
     <div
-      ref={mergeRefs([ref, forwardedRef])}
+      ref={useForkRef(ref, forwardedRef)}
       {...etc}
       id={id}
       cmdk-item=""
@@ -761,7 +764,7 @@ const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef)
 
   return (
     <div
-      ref={mergeRefs([ref, forwardedRef])}
+      ref={useForkRef(ref, forwardedRef)}
       {...etc}
       cmdk-group=""
       role="presentation"
@@ -791,7 +794,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
   const render = useCmdk((state) => !state.search)
 
   if (!alwaysRender && !render) return null
-  return <div ref={mergeRefs([ref, forwardedRef])} {...etc} cmdk-separator="" role="separator" />
+  return <div ref={useForkRef(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
 })
 
 /**
@@ -872,7 +875,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
 
   return (
     <div
-      ref={mergeRefs([ref, forwardedRef])}
+      ref={useForkRef(ref, forwardedRef)}
       {...etc}
       cmdk-list=""
       role="listbox"
@@ -882,7 +885,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
       id={context.listId}
     >
       {SlottableWithNestedChildren(props, (child) => (
-        <div ref={mergeRefs([height, context.listInnerRef])} cmdk-list-sizer="">
+        <div ref={useForkRef(height, context.listInnerRef)} cmdk-list-sizer="">
           {child}
         </div>
       ))}
@@ -1012,21 +1015,6 @@ function useLazyRef<T>(fn: () => T) {
   }
 
   return ref as React.MutableRefObject<T>
-}
-
-// ESM is still a nightmare with Next.js so I'm just gonna copy the package code in
-// https://github.com/gregberge/react-merge-refs
-// Copyright (c) 2020 Greg Bergé
-function mergeRefs<T = any>(refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>): React.RefCallback<T> {
-  return (value) => {
-    refs.forEach((ref) => {
-      if (typeof ref === "function") {
-        ref(value)
-      } else if (ref != null) {
-        ;(ref as React.MutableRefObject<T | null>).current = value
-      }
-    })
-  }
 }
 
 /** Run a selector against the store state. */
