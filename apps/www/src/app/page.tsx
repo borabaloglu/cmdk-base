@@ -24,19 +24,20 @@ export default function Home() {
           </p>
         </div>
         <nav className="mt-8 flex items-center justify-center gap-4">
-          <a
-            href="https://github.com/borabaloglu/cmdk-base"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              className="bg-background text-foreground hover:border-primary relative z-10 gap-2 rounded-full border brightness-75 transition-all duration-200 hover:no-underline hover:brightness-100"
-              variant="link"
-            >
-              <GithubIcon className="size-3.5" />
-              borabaloglu/cmdk-base
-            </Button>
-          </a>
+          <Button
+            className="bg-background text-foreground hover:border-primary relative z-10 gap-2 rounded-full border brightness-75 transition-all duration-200 hover:no-underline hover:brightness-100"
+            variant="link"
+            render={
+              <a
+                href="https://github.com/borabaloglu/cmdk-base"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GithubIcon className="size-3.5" />
+                borabaloglu/cmdk-base
+              </a>
+            }
+          />
         </nav>
         <div className="mx-auto mt-10 w-full max-w-screen-md space-y-4">
           <div className="text-muted-foreground flex items-center justify-center gap-1 text-center text-sm">
