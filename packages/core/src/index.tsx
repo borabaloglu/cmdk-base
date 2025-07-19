@@ -7,7 +7,7 @@
 
 import * as React from "react"
 import { Dialog as BaseDialog } from "@base-ui-components/react"
-import { useForkRef, useId } from "@base-ui-components/react/utils"
+import { useId } from "@base-ui-components/react/utils"
 
 import { commandScore } from "./command-score"
 
@@ -722,7 +722,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
 
   return (
     <div
-      ref={useForkRef(ref, forwardedRef)}
+      ref={mergeRefs([ref, forwardedRef])}
       {...etc}
       id={id}
       cmdk-item=""
@@ -764,7 +764,7 @@ const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef)
 
   return (
     <div
-      ref={useForkRef(ref, forwardedRef)}
+      ref={mergeRefs([ref, forwardedRef])}
       {...etc}
       cmdk-group=""
       role="presentation"
@@ -794,7 +794,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
   const render = useCmdk((state) => !state.search)
 
   if (!alwaysRender && !render) return null
-  return <div ref={useForkRef(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
+  return <div ref={mergeRefs([ref, forwardedRef])} {...etc} cmdk-separator="" role="separator" />
 })
 
 /**
@@ -875,7 +875,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
 
   return (
     <div
-      ref={useForkRef(ref, forwardedRef)}
+      ref={mergeRefs([ref, forwardedRef])}
       {...etc}
       cmdk-list=""
       role="listbox"
@@ -885,7 +885,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
       id={context.listId}
     >
       {SlottableWithNestedChildren(props, (child) => (
-        <div ref={useForkRef(height, context.listInnerRef)} cmdk-list-sizer="">
+        <div ref={mergeRefs([height, context.listInnerRef])} cmdk-list-sizer="">
           {child}
         </div>
       ))}
@@ -1093,6 +1093,21 @@ function SlottableWithNestedChildren(
     return React.cloneElement(renderChildren(children), { ref: (children as any).ref }, render(children.props.children))
   }
   return render(children)
+}
+
+// ESM is still a nightmare with Next.js so I'm just gonna copy the package code in
+// https://github.com/gregberge/react-merge-refs
+// Copyright (c) 2020 Greg Bergé
+function mergeRefs<T = any>(refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>): React.RefCallback<T> {
+  return (value) => {
+    refs.forEach((ref) => {
+      if (typeof ref === "function") {
+        ref(value)
+      } else if (ref != null) {
+        ;(ref as React.MutableRefObject<T | null>).current = value
+      }
+    })
+  }
 }
 
 const srOnlyStyles = {
