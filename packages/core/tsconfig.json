@@ -3,7 +3,8 @@
   "compilerOptions": {
     "jsx": "react",
     "target": "es2018",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
     "esModuleInterop": true,
     "lib": ["es2015", "dom"],
     "strict": true,

@@ -52,7 +52,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "peerDependencies": {
-    "@base-ui-components/react": "1.0.0-beta.1",
+    "@base-ui-components/react": "^1.0.0-beta.2",
     "react": "^18 || ^19 || ^19.0.0-rc",
     "react-dom": "^18 || ^19 || ^19.0.0-rc"
   },
