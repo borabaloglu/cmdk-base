@@ -7,7 +7,7 @@
 
 import * as React from "react"
 import { Dialog as BaseDialog } from "@base-ui-components/react"
-import { useId } from "@base-ui-components/react/utils"
+import { useId } from "@base-ui-components/utils/useId"
 
 import { commandScore } from "./command-score"
 
