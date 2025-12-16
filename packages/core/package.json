@@ -52,7 +52,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
+    "@base-ui/react": "^1.0.0",
     "react": "^18 || ^19 || ^19.0.0-rc",
     "react-dom": "^18 || ^19 || ^19.0.0-rc"
   },
@@ -60,6 +60,6 @@
     "@types/react": "^18.2.46"
   },
   "dependencies": {
-    "@base-ui-components/utils": "^0.1.0"
+    "@base-ui/utils": "^0.2.3"
   }
 }

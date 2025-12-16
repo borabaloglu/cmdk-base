@@ -6,8 +6,8 @@
 "use client"
 
 import * as React from "react"
-import { Dialog as BaseDialog } from "@base-ui-components/react"
-import { useId } from "@base-ui-components/utils/useId"
+import { Dialog as BaseDialog } from "@base-ui/react"
+import { useId } from "@base-ui/utils/useId"
 
 import { commandScore } from "./command-score"
 

@@ -2,12 +2,11 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { mergeProps } from "@base-ui-components/react"
-import { useRender } from "@base-ui-components/react/use-render"
+import { Button as BaseButton } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-xs font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -16,12 +15,12 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-xs",
         ghost:
-          "text-foreground hover:bg-accent/80 hover:text-accent-foreground",
+          "text-foreground hover:bg-accent dark:hover:bg-accent/50 hover:text-accent-foreground",
         outline:
-          "border bg-transparent text-foreground hover:bg-accent/80 hover:text-accent-foreground shadow-xs",
+          "border bg-transparent text-foreground hover:bg-accent dark:hover:bg-accent/50 hover:text-accent-foreground shadow-xs",
         link: "text-foreground hover:underline",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/80 focus-visible:ring-destructive/50 shadow-xs",
+          "bg-destructive hover:bg-destructive/80 dark:bg-destructive/80 text-destructive-foreground dark:hover:bg-destructive/60 dark:focus-visible:ring-destructive/40 focus-visible:ring-destructive/50 shadow-xs",
       },
       size: {
         sm: "h-8 px-3 gap-1",
@@ -39,29 +38,18 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
-  extends VariantProps<typeof buttonVariants>,
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    useRender.ComponentProps<"button"> {}
+type ButtonProps = VariantProps<typeof buttonVariants> &
+  React.ComponentProps<typeof BaseButton>
 
-function Button({
-  className,
-  variant,
-  size,
-  render = <button />,
-  ...props
-}: ButtonProps) {
-  const defaultProps = {
-    "data-slot": "button",
-    className: cn(buttonVariants({ variant, size, className })),
-  } as const
-
-  const element = useRender({
-    render,
-    props: mergeProps<"button">(defaultProps, props),
-  })
-
-  return element
+function Button({ className, variant, size, ...props }: ButtonProps) {
+  return (
+    <BaseButton
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
+  )
 }
 
 export { Button, buttonVariants }
+export type { ButtonProps }

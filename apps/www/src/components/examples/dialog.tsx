@@ -90,7 +90,7 @@ export function Dialog({ open, setOpen }: DialogProps) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [])
+  }, [setOpen])
 
   return (
     <CommandDialog

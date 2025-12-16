@@ -37,6 +37,7 @@ export default function Home() {
                 borabaloglu/cmdk-base
               </a>
             }
+            nativeButton={false}
           />
         </nav>
         <div className="mx-auto mt-10 w-full max-w-screen-md space-y-4">
